@@ -3,4 +3,4 @@ var UserEnum= {
     SUPERVISOR: 2
 };
 
-modul.exports = UserEnum;
+module.exports = UserEnum;

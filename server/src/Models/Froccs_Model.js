@@ -9,7 +9,7 @@ var Froccs = new Schema({
         water: Number,
         total_dl: Number,
         other_name: [String],
-        uploaded_by: Schema.Types.ObjectID,
+        uploaded_by: String,
         uploaded_at: {type: Date, default: Date.now}
 
     },

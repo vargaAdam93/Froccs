@@ -4,27 +4,36 @@ var userRouter = express.Router();
 
 var User = require('../Models/User');
 
-userRouter.route('/login').post(
+userRouter.route('/login/post').post(
     function (req,res) {
         var email = req.body.email;
         var passwd = req.body.password;
-        var query = User.where({ email: email, password : passwd});
-        query.findOne(
+        User.findOne({ email: email, password : passwd},
             function (err,user) {
-                if(err) return res.status(404).send('Not found');
-                if(user)
-                    return res.json(user);
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+                if(user) {
+                    console.log(user);
+                    return res.send(user);
+                }
+                else
+                {
+                    console.log("No such user");
+                    return res.status(404).send("Not found");
+                }
             }
         )
     }
 );
-userRouter.route('/register').post(
+userRouter.route('/register/post').post(
     function (req,res) {
         var newUser = User();
         newUser.email = req.body.email;
         newUser.name = req.body.name;
         newUser.password = req.body.password;
-        newUser.type = UserEnum.USER;
+        newUser.type = 1;
         var query = User.where({ email: req.body.email});
         query.findOne(
             function (err, user) {
@@ -40,5 +49,17 @@ userRouter.route('/register').post(
         )
     }
 );
+userRouter.route('/').get(function (req,res) {
+    User.find(function (err, users) {
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.json(users);
+        }
+    })
+});
 
 module.exports = userRouter;
