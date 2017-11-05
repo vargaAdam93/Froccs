@@ -1,5 +1,6 @@
-
+var UserEnum = require( './User_types');
 var mongoose = require('mongoose');
+
 
 var Schema = mongoose.Schema;
 
@@ -8,7 +9,7 @@ var User = new Schema({
         name: String,
         email: String,
         password: String,
-        type: UserEnum
+        type: Number
     },
     {
         collection: 'Users'

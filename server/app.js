@@ -7,7 +7,7 @@ var cors = require('cors');
 
 // Mongoose connection with mongodb
 mongoose.Promise = require('bluebird');
-mongoose.connect('localhost:27017')
+mongoose.connect('localhost:27017/froccs')
     .then(() => { // if all is ok we will be here
         console.log('Start');
     })

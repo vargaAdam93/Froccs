@@ -7,32 +7,27 @@ var User = require('../Models/User');
 //POST
 froccsRouter.route('/add/post').post(
     function (req, res) {
-        var UserId = req.body.UserId;
-        User.findById(UserId,
-            function (err, user) {
-                if (err) return res.status(301).send('Not registered');
-                if(user)
-                {
-                    //megvan a db-be
-                    //ellenorizni van-e mar ilyen froccs => wine,water,total_dl megegyezik -e?
-                    var froccs = new Froccs();
-                    froccs.name= req.body.name;
-                    froccs.wine= req.body.wine;
-                    froccs.water= req.body.water;
-                    froccs.total_dl= req.body.total_dl;
-                    froccs.other_name= req.body.other_name;
-                    froccs.uploaded_by= user._id;
-                    froccs.uploaded_at= Date.now();
-                    froccs.save()
-                        .then(froccs => {
-                            res.json('froccs added successfully');
-                        })
-                        .catch(err => {
-                            res.status(400).send('Unable to save to DB');
-                        });
-                }
-            }
-        );
+        console.log(req.body);
+
+        //megvan a db-be
+        //ellenorizni van-e mar ilyen froccs => wine,water,total_dl megegyezik -e?
+        var froccs = new Froccs();
+        froccs.name= req.body.name;
+        froccs.wine= req.body.wine;
+        froccs.water= req.body.water;
+        froccs.total_dl= req.body.total_dl;
+        froccs.other_name= req.body.other_name;
+        froccs.uploaded_by= req.body.email;
+        froccs.uploaded_at= Date.now();
+        froccs.save()
+            .then(froccs => {
+                console.log("added");
+            res.json('froccs added successfully');
+        })
+        .catch(err => {
+                console.log(err);
+            res.status(400).send('Unable to save to DB');
+        });
 
     });
 //GET
@@ -92,10 +87,10 @@ froccsRouter.route('/update/:id').post(
 
                 froccs.save().then(froccs =>{
                     res.json('Update complete');
-                })
-                    .catch( err => {
-                        res.status(400).send("Unable to update");
-                    });
+            })
+            .catch( err => {
+                res.status(400).send("Unable to update");
+            });
             }
         });
     }
