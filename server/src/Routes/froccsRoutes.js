@@ -10,26 +10,53 @@ froccsRouter.route('/add/post').post(
         console.log(req.body);
 
         //megvan a db-be
-        //ellenorizni van-e mar ilyen froccs => wine,water,total_dl megegyezik -e?
-        var froccs = new Froccs();
-        froccs.name= req.body.name;
-        froccs.wine= req.body.wine;
-        froccs.water= req.body.water;
-        froccs.total_dl= req.body.total_dl;
-        froccs.other_name= req.body.other_name;
-        froccs.uploaded_by= req.body.email;
-        froccs.uploaded_at= Date.now();
-        froccs.save()
-            .then(froccs => {
-                console.log("added");
-            res.json('froccs added successfully');
-        })
-        .catch(err => {
-                console.log(err);
-            res.status(400).send('Unable to save to DB');
-        });
+        //TODO egyezes eseten ujragondolni   
 
-    });
+        Froccs.find({wine:req.body.wine,water:req.body.water,total_dl:req.body.total_dl}).then((check)=> {
+
+            console.log("matched: \n"+check)
+
+            if(check.length==0){
+
+                var froccs = new Froccs();
+                froccs.name= req.body.name;
+                froccs.wine= req.body.wine;
+                froccs.water= req.body.water;
+                froccs.total_dl= req.body.total_dl;
+                froccs.other_name= req.body.other_name;
+                froccs.uploaded_by= req.body.email;
+                froccs.uploaded_at= Date.now();
+                
+                
+                froccs.save().then(froccs => {
+                    console.log("added");
+                    res.json('froccs added successfully');
+                })
+                .catch(err => {
+                        console.log(err);
+                    res.status(400).send('Unable to save to DB');
+                });
+            }else{
+                                                              
+                Froccs.update({_id:check[0]._id},{$push:{other_name:req.body.name}},
+                    function(err){
+                        if(err){ 
+                            console.log(err)
+                            res.status(400).send('Unable to save to DB');
+                        }else{
+                            console.log("new name added");
+                            res.json('new name added successfully');
+                        }
+                })
+                
+            }
+
+        })
+
+    }
+);
+
+
 //GET
 froccsRouter.route('/').get(
     function (req, res) {
