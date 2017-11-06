@@ -29,7 +29,7 @@ class LoginUser extends Component {
     handleSubmit(event)
     {
         event.preventDefault();
-        this.props.UserId =  this.addUserService.login(this.state);
+        this.addUserService.login(this.state);
         this.props.history.push('/');
     }
 

@@ -14,9 +14,9 @@ froccsRouter.route('/add/post').post(
 
         Froccs.find({wine:req.body.wine,water:req.body.water,total_dl:req.body.total_dl}).then((check)=> {
 
-            console.log("matched: \n"+check)
+            console.log("matched: \n"+check);
 
-            if(check.length==0){
+            if(check.length == 0){
 
                 var froccs = new Froccs();
                 froccs.name= req.body.name;
@@ -41,7 +41,7 @@ froccsRouter.route('/add/post').post(
                 Froccs.update({_id:check[0]._id},{$push:{other_name:req.body.name}},
                     function(err){
                         if(err){ 
-                            console.log(err)
+                            console.log(err);
                             res.status(400).send('Unable to save to DB');
                         }else{
                             console.log("new name added");
