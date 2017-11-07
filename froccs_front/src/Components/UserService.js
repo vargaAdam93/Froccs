@@ -26,13 +26,15 @@ class UserService
                password: data.password
            })
            .then(function (response) {
+               if(response==null)console.log(response)
+               
+               console.log(response)
                alert(response.data._id);
                data.UserId = response.data._id;
                return response.data._id;
-           })
-           .catch(function (error) {
-               alert(error.toString());
-           });
+
+           }).catch((err,response)=>{console.log(err);console.log(response)})
+           
     }
 }
 export default UserService;

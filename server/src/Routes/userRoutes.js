@@ -21,7 +21,7 @@ userRouter.route('/login/post').post(
                 else
                 {
                     console.log("No such user");
-                    return res.status(404).send("Not found");
+                    return res.send(null);
                 }
             }
         )

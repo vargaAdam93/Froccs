@@ -85,8 +85,14 @@ class AddUser extends Component {
         var LoginData = {email: this.state.email,
             password: this.state.password};
         event.preventDefault();
-        this.setState({UserId : this.addUserService.login(LoginData)});
-        this.logged_in = 1;
+        var resp = this.addUserService.login(LoginData);
+        if (resp !== undefined)
+        {
+            this.setState({UserId : resp});
+            this.logged_in = 1;
+        }
+        else
+            alert("Hiba");
     }
     render()
     {
