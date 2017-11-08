@@ -15,13 +15,13 @@ userRouter.route('/login/post').post(
                     return res.send(err);
                 }
                 if(user) {
-                    console.log(user);
+                    console.log("userroute ok"+user);
                     return res.send(user);
                 }
                 else
                 {
                     console.log("No such user");
-                    return res.send(null);
+                    return res.send("");
                 }
             }
         )

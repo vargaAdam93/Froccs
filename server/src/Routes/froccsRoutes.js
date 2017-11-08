@@ -23,7 +23,6 @@ froccsRouter.route('/add/post').post(
                 froccs.wine= req.body.wine;
                 froccs.water= req.body.water;
                 froccs.total_dl= req.body.total_dl;
-                froccs.other_name= req.body.other_name;
                 froccs.uploaded_by= req.body.email;
                 froccs.uploaded_at= Date.now();
                 

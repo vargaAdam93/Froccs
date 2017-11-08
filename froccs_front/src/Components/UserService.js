@@ -26,11 +26,13 @@ class UserService
                password: data.password
            })
            .then(function (response) {
-               if(response==null)console.log(response)
+               if(response==null){
+                   console.log(response)
+                   return null
+                }
                
                console.log(response)
                alert(response.data._id);
-               data.UserId = response.data._id;
                return response.data._id;
 
            }).catch((err,response)=>{console.log(err);console.log(response)})

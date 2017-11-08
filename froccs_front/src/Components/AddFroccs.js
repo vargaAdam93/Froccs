@@ -1,10 +1,11 @@
 //AddFroccs.js
 
 import React,{Component} from 'react';
+import axios from 'axios'
 import UserService from '../Components/UserService'
 import FroccsService from "./FroccsService";
 
-class AddUser extends Component {
+class AddFroccs extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,8 +13,7 @@ class AddUser extends Component {
             name : '',
             wine : '',
             water : '',
-            total_dl : '',
-            other_name : [],
+            total_dl : '',         
             uploaded_by : '',
             email: '',
             password: ''};
@@ -30,7 +30,8 @@ class AddUser extends Component {
         this.WinehandleChange = this.WinehandleChange.bind(this);
         this.WaterhandleChange = this.WaterhandleChange.bind(this);
         this.Total_dlhandleChange = this.Total_dlhandleChange.bind(this);
-        this.Other_namehandleChange = this.Other_namehandleChange.bind(this);
+        
+        
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.LoginhandleSubmit = this.LoginhandleSubmit.bind(this);
@@ -80,23 +81,35 @@ class AddUser extends Component {
         this.props.history.push('/add-froccs');
     }
 
+    
     LoginhandleSubmit(event)
     {
         var LoginData = {email: this.state.email,
-            password: this.state.password};
+                        password: this.state.password};
+        
         event.preventDefault();
-        var resp = this.addUserService.login(LoginData);
-        if (resp !== undefined)
+        
+        var self=this
+        axios.post('http://localhost:4200/users/login/post',
         {
-            this.setState({UserId : resp});
-            this.logged_in = 1;
-        }
-        else
-            alert("Hiba");
+            email: LoginData.email,
+            password: LoginData.password
+        }).then(function (response) {
+
+            if(typeof response.data._id!== 'undefined'){
+                self.setState({UserId: response.data._id})
+            }
+            else{  
+                alert("Wrong username or password!") 
+                self.setState({UserId: ""})
+            }
+        }).catch((err,response)=>alert("login error"+err))
     }
+
+
     render()
     {
-        if (this.logged_in == 0)
+        if (this.state.UserId == '')
         {
            return(
                <div>
@@ -141,11 +154,8 @@ class AddUser extends Component {
                             <input type="text" value={this.state.total_dl} onChange={this.Total_dlhandleChange} className="form-control"/>
                         </label>
                         <br/>
-                        <label>
-                            Other name:
-                            <input type="text" value={this.state.other_name} onChange={this.Other_namehandleChange} className="form-control"/>
-                        </label>
-                        <br/>
+                        
+                        
                         <input type="submit" value="Submit" className="btn btn-primary"/>
                 </form>
                 </div>
@@ -154,4 +164,4 @@ class AddUser extends Component {
     }
 }
 
-export default AddUser;
+export default AddFroccs;
