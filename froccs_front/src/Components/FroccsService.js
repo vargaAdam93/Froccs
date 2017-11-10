@@ -20,5 +20,12 @@ class FroccsService
                 alert(error);
             });
     }
+
+    delete(data)
+    {
+        axios.get('http://localhost:4200/froccs/delete/'+data)
+            .then(console.log('Deleted')).catch(error => alert("Hiba"+error));
+
+    }
 }
 export default FroccsService;

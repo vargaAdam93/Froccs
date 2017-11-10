@@ -1,17 +1,20 @@
 //TableRowFroccs.js
 import React, { Component} from 'react';
+import FroccsService from './FroccsService';
 
 class TableRowFroccs extends Component
 {
     constructor(props)
     {
         super(props);
+        this.FroccsService = new FroccsService();
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event)
     {
         event.preventDefault();
+        this.FroccsService.delete(this.props.obj._id);
         window.location.reload();
     }
 

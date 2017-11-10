@@ -123,7 +123,7 @@ froccsRouter.route('/update/:id').post(
 );
 //DELETE
 froccsRouter.route('/delete/:id').get(function (req, res) {
-    froccs.findByIdAndRemove({_id: req.params.id},
+    Froccs.findByIdAndRemove({_id: req.params.id},
         function (err, froccs) {
             if(err)
             {

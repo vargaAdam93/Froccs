@@ -12,7 +12,7 @@ import IndexFroccs from './Components/IndexFroccs'
 ReactDOM.render(
     <Router>
         <div>
-            <Route exact path='/' component={App} />
+            <Route exact path='/' component={IndexFroccs} />
             <Route path='/add-user' component={AddUser}/>
             <Route path='/login' component={ LoginUser}/>
             <Route path='/add-froccs' component={AddFroccs } />
