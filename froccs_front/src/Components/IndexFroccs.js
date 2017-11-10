@@ -3,6 +3,9 @@
 import React, {Component} from 'react';
 import TableRowFroccs from './TableRowFroccs'
 import axios from 'axios';
+import ReactTable from 'react-table';
+import "react-table/react-table.css";
+import FroccsService from './FroccsService';
 
 class IndexFroccs extends Component
 {
@@ -11,9 +14,12 @@ class IndexFroccs extends Component
     {
         super(prop);
         this.state = {froccsok : '',
-                      order_by : ''};
-        this.selectChangedHandleEvent = this.selectChangedHandleEvent.bind(this);
-        this.orderby = 'name';
+                      order_by : '',
+                    loaded : 0};
+
+        this.FroccsService = new FroccsService();
+
+        this.DeletehandleSubmit = this.DeletehandleSubmit.bind(this);
     }
 
     componentDidMount()
@@ -22,7 +28,7 @@ class IndexFroccs extends Component
         {
             axios.get('http://localhost:4200/froccs')
                 .then(response =>{
-                    this.setState({froccsok: response.data});
+                    this.setState({froccsok: response.data,loaded: 1});
                 })
                 .catch(function (error) {
                     alert(error);
@@ -30,57 +36,74 @@ class IndexFroccs extends Component
         }
     }
 
-    selectChangedHandleEvent(event)
+    DeletehandleSubmit(event)
     {
-        alert(event.target.value);
-        event.preventDefault();
-        this.setState({orderby : event.target.value});
-        this.orderby = event.target.value;
-    }
-
-    tabRow()
-    {
-        if(this.state.froccsok instanceof Array)
-        {
-            if(this.orderby == 'name') {
-                this.state.froccsok.sort(function (a, b) {
-                    return a.name > b.name;
-                });
-            }
-            else
-            {
-                if(this.orderby == 'wine')
-                {
-
-                    this.state.froccsok.sort(function (a,b) {
-                        return a.wine - b.wine;
-                    });
-                }
-                if(this.orderby == 'water')
-                {
-
-                    this.state.froccsok.sort(function (a,b) {
-                        return a.water - b.water;
-                    });
-                }
-                if(this.orderby == 'total')
-                {
-
-                    this.state.froccsok.sort(function (a,b) {
-                        return a.total_dl - b.total_dl;
-                    });
-                }
-            }
-            return this.state.froccsok.map(function (object,i) {
-                return <TableRowFroccs obj={ object } key = {i} />
-            })
-        }
+        //console.log(event);
+        //alert(event.target.name);
+        this.FroccsService.delete(event.target.name);
+        window.location.reload();
 
     }
-
     render()
     {
-        return (
+        if(this.state.loaded == 1) {
+            const froccsok = this.state.froccsok;
+            return (
+                <div>
+                    <ReactTable
+                        data={froccsok}
+                        columns={[
+                            {
+                                Header: "Name",
+                                accessor: "name"
+                            },
+                            {
+                                Header: "Wine",
+                                accessor:"wine"
+                            },
+                            {
+                                Header: "Water",
+                                accessor:"water"
+                            },
+                            {
+                                Header:"Total in dl",
+                                accessor:"total_dl"
+                            },
+                            {
+                                Header: "Other Names",
+                                accessor: "other_name"
+                            },
+                            {
+                                Header: "Delete",
+                                accessor: "_id",
+                                filterable: false,
+                                Cell: row => (
+                                    <div align="center">
+                                        <form>
+                                            <input type="submit" value="Delete" className="btn btn-danger" name={row.value} onClick={this.DeletehandleSubmit}/>
+                                        </form>
+                                    </div>
+                                )
+                            }
+                        ]}
+                        defaultPageSize={10}
+                        filterable
+                        className="-striped -highlight"
+                    />
+                    <br/>
+                </div>
+            );
+        }
+        else
+        {
+            return(
+              <div>
+                  LOADING...
+              </div>
+            );
+        }
+    }
+ /*       return (
             <div>
                 <br/>
                 <div align="center">
@@ -111,7 +134,7 @@ class IndexFroccs extends Component
                 </table>
             </div>
         );
-    }
+    }*/
 }
 
 export default IndexFroccs;
