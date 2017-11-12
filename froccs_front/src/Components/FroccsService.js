@@ -5,6 +5,7 @@ class FroccsService
 {
     sendData(data)
     {
+        
         axios.post('http://localhost:4200/froccs/add/post',
             {
                 name : data.name,
@@ -14,12 +15,14 @@ class FroccsService
                 uploaded_by : data.email
             })
             .then(function (response) {
-                alert(response.data);
+                alert("post"+response.data);
             })
             .catch(function (error) {
                 alert(error);
             });
     }
+
+    
 
     delete(data)
     {

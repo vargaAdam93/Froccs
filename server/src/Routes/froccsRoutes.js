@@ -14,7 +14,7 @@ froccsRouter.route('/add/post').post(
 
         Froccs.find({wine:req.body.wine,water:req.body.water,total_dl:req.body.total_dl}).then((check)=> {
 
-            console.log("matched: \n"+check);
+            
 
             if(check.length == 0){
 

@@ -4,6 +4,7 @@ import React,{Component} from 'react';
 import axios from 'axios'
 import UserService from '../Components/UserService'
 import FroccsService from "./FroccsService";
+import {FileUpload}  from 'react-md'; 
 
 class AddFroccs extends Component {
     constructor(props) {
@@ -30,6 +31,7 @@ class AddFroccs extends Component {
         this.WinehandleChange = this.WinehandleChange.bind(this);
         this.WaterhandleChange = this.WaterhandleChange.bind(this);
         this.Total_dlhandleChange = this.Total_dlhandleChange.bind(this);
+        this.sendData = this.sendData.bind(this);
         
         
 
@@ -106,6 +108,10 @@ class AddFroccs extends Component {
         }).catch((err,response)=>alert("login error"+err))
     }
 
+    sendData(file,data){
+        this.addFroccsService.sendData(JSON.parse(data))
+    }
+
 
     render()
     {
@@ -157,6 +163,9 @@ class AddFroccs extends Component {
                         
                         
                         <input type="submit" value="Submit" className="btn btn-primary"/>
+
+                        <FileUpload  id="multiple-file-upload"  onLoad={this.sendData}
+            />
                 </form>
                 </div>
             );
