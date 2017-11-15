@@ -11,6 +11,7 @@ class AddFroccs extends Component {
         super(props);
         this.state = {
             UserId: '',
+            type:'',
             name : '',
             wine : '',
             water : '',
@@ -100,10 +101,12 @@ class AddFroccs extends Component {
 
             if(typeof response.data._id!== 'undefined'){
                 self.setState({UserId: response.data._id})
+                self.setState({type: response.data.type})
             }
             else{  
                 alert("Wrong username or password!") 
                 self.setState({UserId: ""})
+                
             }
         }).catch((err,response)=>alert("login error"+err))
     }
@@ -163,9 +166,11 @@ class AddFroccs extends Component {
                         
                         
                         <input type="submit" value="Submit" className="btn btn-primary"/>
-
-                        <FileUpload  id="multiple-file-upload"  onLoad={this.sendData}
-            />
+                        { (this.state.type==2 ) ?
+                                <FileUpload  id="multiple-file-upload"  onLoad={this.sendData}/>
+                                :
+                                null
+                        }
                 </form>
                 </div>
             );

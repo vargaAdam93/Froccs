@@ -9,7 +9,8 @@ class UserService
             {
                 name: data.name,
                 email: data.email,
-                password: data.password
+                password: data.password,
+                type:1
             })
             .then(function (response) {
                 alert(response);
