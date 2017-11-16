@@ -1,7 +1,7 @@
 //IndexFroccs.js
 
 import React, {Component} from 'react';
-import TableRowFroccs from './TableRowFroccs'
+import {Link} from 'react-router-dom'
 import axios from 'axios';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
@@ -13,9 +13,11 @@ class IndexFroccs extends Component
     constructor(prop)
     {
         super(prop);
-        this.state = {froccsok : '',
-                      order_by : '',
-                    loaded : 0};
+        this.state = {  froccsok : '',
+                        loaded : 0,
+                        delete_id : 0,
+                        delete_request:0
+        };
 
         this.FroccsService = new FroccsService();
 
@@ -40,66 +42,80 @@ class IndexFroccs extends Component
     {
         //console.log(event);
         //alert(event.target.name);
-        this.FroccsService.delete(event.target.name);
+        this.setState({delete_id: event.target.name,delete_request:1});
+        //this.FroccsService.delete(event.target.name);
         window.location.reload();
 
     }
+
     render()
     {
-        if(this.state.loaded == 1) {
+
+        if (this.state.loaded == 1) {
             const froccsok = this.state.froccsok;
             return (
                 <div>
-                    <ReactTable
-                        data={froccsok}
-                        columns={[
-                            {
-                                Header: "Name",
-                                accessor: "name"
-                            },
-                            {
-                                Header: "Wine",
-                                accessor:"wine"
-                            },
-                            {
-                                Header: "Water",
-                                accessor:"water"
-                            },
-                            {
-                                Header:"Total in dl",
-                                accessor:"total_dl"
-                            },
-                            {
-                                Header: "Other Names",
-                                accessor: "other_name"
-                            },
-                            {
-                                Header: "Delete",
-                                accessor: "_id",
-                                filterable: false,
-                                Cell: row => (
-                                    <div align="center">
-                                        <form>
-                                            <input type="submit" value="Delete" className="btn btn-danger" name={row.value} onClick={this.DeletehandleSubmit}/>
-                                        </form>
-                                    </div>
-                                )
-                            }
-                        ]}
-                        defaultPageSize={10}
-                        filterable
-                        className="-striped -highlight"
-                    />
-                    <br/>
+                    <p>
+                        <p>
+                            <div align="center">
+                                <Link to="/add-froccs">Add froccs</Link>
+                            </div>
+                        </p>
+                        <p>
+                            <Link to="/add-user">Register</Link>
+                        </p>
+                        <ReactTable
+                            data={froccsok}
+                            columns={[
+                                {
+                                    Header: "Name",
+                                    accessor: "name"
+                                },
+                                {
+                                    Header: "Wine",
+                                    accessor: "wine",
+
+                                },
+                                {
+                                    Header: "Water",
+                                    accessor: "water",
+                                },
+                                {
+                                    Header: "Total in dl",
+                                    accessor: "total_dl"
+                                },
+                                {
+                                    Header: "Other Names",
+                                    accessor: "other_name"
+                                },
+                                {
+                                    Header: "Delete",
+                                    accessor: "_id",
+                                    filterable: false,
+                                    Cell: row => (
+                                        <div align="center">
+                                            <form>
+                                                <input type="submit" value="Delete" className="btn btn-danger"
+                                                       name={row.value} onClick={this.DeletehandleSubmit}/>
+                                            </form>
+                                        </div>
+                                    )
+                                }
+                            ]}
+                            defaultPageSize={10}
+                            filterable
+                            className="-striped -highlight"
+                        />
+                        <br/>
+                    </p>
                 </div>
             );
         }
-        else
-        {
-            return(
-              <div>
-                  LOADING...
-              </div>
+        else {
+            return (
+                <div>
+                    LOADING...
+                </div>
             );
         }
     }

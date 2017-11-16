@@ -6,14 +6,14 @@ import UserService from '../Components/UserService'
 class AddUser extends Component {
     constructor(props) {
         super(props);
-        this.state = {name: '', email: '', password: ''};
+        this.state = {name: '', email: '', password: '',type:'1'};
 
         this.addUserService = new UserService();
 
         this.NamehandleChange = this.NamehandleChange.bind(this);
         this.EmailhandleChange = this.EmailhandleChange.bind(this);
         this.PasswdhandleChange = this.PasswdhandleChange.bind(this);
-
+        this.selectChangedHandleEvent = this.selectChangedHandleEvent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -32,6 +32,10 @@ class AddUser extends Component {
     {
         this.setState({password: event.target.value});
     }
+    selectChangedHandleEvent(event)
+    {
+        this.setState({type:event.target.value});
+    }
 
     handleSubmit(event)
     {
@@ -46,6 +50,7 @@ class AddUser extends Component {
         return(
             <div className="container">
                 <form onSubmit={this.handleSubmit}>
+
                     <label>
                         Name:
                         <input type="text" value={this.state.name} onChange={this.NamehandleChange} className="form-control"/>
@@ -58,8 +63,13 @@ class AddUser extends Component {
                     <br/>
                     <label>
                         Passwd:
-                        <input type="text" value={this.state.password} onChange={this.PasswdhandleChange} className="form-control"/>
+                        <input type="password" value={this.state.password} onChange={this.PasswdhandleChange} className="form-control"/>
                     </label>
+                    <br/>
+                    <select onChange={this.selectChangedHandleEvent} value={this.state.type}>
+                        <option value="1">Felhasznalo</option>
+                        <option value="2">Rendszergazda</option>
+                    </select>
                     <br/>
                     <input type="submit" value="Submit" className="btn btn-primary"/>
                 </form>

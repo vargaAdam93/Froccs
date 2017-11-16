@@ -81,7 +81,7 @@ class AddFroccs extends Component {
         alert(this.state.email);
         event.preventDefault();
         this.addFroccsService.sendData(this.state);
-        this.props.history.push('/add-froccs');
+        this.props.history.push('/');
     }
 
     
@@ -130,7 +130,7 @@ class AddFroccs extends Component {
                     <br/>
                     <label>
                         Password:
-                        <input type="text" value={this.state.password} onChange={this.PasswordhandleChange} className="form-control"/>
+                        <input type="password" value={this.state.password} onChange={this.PasswordhandleChange} className="form-control"/>
                     </label>
                     <br/>
                        <input type="submit" value="Submit" className="btn btn-primary"/>
