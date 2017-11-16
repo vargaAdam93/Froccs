@@ -52,18 +52,29 @@ class IndexFroccs extends Component
     {
 
         if (this.state.loaded == 1) {
-            const froccsok = this.state.froccsok;
+            var froccs_with_perc = this.state.froccsok;
+            for(var k =0 ; k < froccs_with_perc.length; k++)
+            {
+                var water_plus_wine = froccs_with_perc[k].water + froccs_with_perc[k].wine;
+                var one_part = froccs_with_perc[k].total_dl / water_plus_wine;
+                var water_dl = froccs_with_perc[k].water * one_part
+                froccs_with_perc[k].water_inperc = ((water_dl/froccs_with_perc[k].total_dl) *100 );
+            }
+            const froccsok = froccs_with_perc;
             return (
                 <div>
                     <p>
                         <p>
                             <div align="center">
-                                <Link to="/add-froccs">Add froccs</Link>
+                                <Link to="/add-user">Register</Link>
                             </div>
                         </p>
                         <p>
-                            <Link to="/add-user">Register</Link>
+                            <div align="center">
+                                <Link to="/add-froccs">Add froccs</Link>
+                            </div>
                         </p>
+
                         <ReactTable
                             data={froccsok}
                             columns={[
@@ -74,15 +85,61 @@ class IndexFroccs extends Component
                                 {
                                     Header: "Wine",
                                     accessor: "wine",
+                                    Cell: row =>(
+                                        <div>
+                                            <font color={'#f6ae96'}>
+                                                {row.value}
+                                            </font>
+                                        </div>
+                                    )
 
                                 },
                                 {
                                     Header: "Water",
                                     accessor: "water",
+                                    Cell: row =>(
+                                        <div>
+                                            <font color={'#7dd2ee'}>
+                                                {row.value}
+                                            </font>
+                                        </div>
+                                    )
                                 },
                                 {
                                     Header: "Total in dl",
                                     accessor: "total_dl"
+                                },
+                                {
+                                    Header: "Rate",
+                                    accessor: "water_inperc",
+                                    Cell: row =>(
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                backgroundColor: '#dadada',
+                                                borderRadius: '2px'
+                                            }}
+                                        >
+                                            <label
+                                                style={{
+                                                    width: `${row.value}%`,
+                                                    height: '100%',
+                                                    backgroundColor:'#7dd2ee',
+                                                    borderRadius: '2px',
+                                                    transition: 'all .2s ease-out'
+                                                }}
+                                            />
+                                            <label style={{
+                                                width: `${100-row.value}%`,
+                                                height: '100%',
+                                                backgroundColor:'#f6ae96',
+                                                borderRadius: '2px',
+                                                transition: 'all .2s ease-out'
+                                            }}/>
+
+                                        </div>
+                                    )
                                 },
                                 {
                                     Header: "Other Names",
