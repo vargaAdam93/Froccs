@@ -14,8 +14,6 @@ froccsRouter.route('/add/post').post(
 
         Froccs.find({wine:req.body.wine,water:req.body.water,total_dl:req.body.total_dl}).then((check)=> {
 
-            
-
             if(check.length == 0){
 
                 var froccs = new Froccs();
@@ -23,7 +21,7 @@ froccsRouter.route('/add/post').post(
                 froccs.wine= req.body.wine;
                 froccs.water= req.body.water;
                 froccs.total_dl= req.body.total_dl;
-                froccs.uploaded_by= req.body.email;
+                froccs.uploaded_by= req.body.uploaded_by;
                 froccs.uploaded_at= Date.now();
                 
                 
@@ -122,18 +120,48 @@ froccsRouter.route('/update/:id').post(
     }
 );
 //DELETE
-froccsRouter.route('/delete/:id').get(function (req, res) {
-    Froccs.findByIdAndRemove({_id: req.params.id},
-        function (err, froccs) {
-            if(err)
-            {
-                res.json(err);
+froccsRouter.route('/delete/post').post(function (req, res) {
+    User.findOne({ email: req.body.email, password : req.body.password},
+        function (err,user) {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            if(user) {
+                Froccs.findById({_id: req.body.froccs_id},
+                    function (err, froccs) {
+                        if(err)
+                        {
+                            console.log("Hiba: "+ err);
+                        }
+                        else
+                        {
+                            if((froccs.uploaded_by == req.body.email)||(user.type == 2))
+                            {
+                                Froccs.findByIdAndRemove({_id: req.body.froccs_id},
+                                    function (err, froccs) {
+                                        if(err)
+                                        {
+                                           res.json(err);
+                                        }
+                                        else
+                                        {
+                                            res.json('Removed');
+                                        }
+                                    });
+                            }
+                        }
+                    }
+                );
             }
             else
             {
-                res.json('Removed');
+                console.log("No such user");
+                res.send("");
             }
-        });
+        }
+    )
+
 });
 
 module.exports = froccsRouter;

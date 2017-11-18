@@ -26,7 +26,12 @@ class FroccsService
 
     delete(data)
     {
-        axios.get('http://localhost:4200/froccs/delete/'+data)
+        axios.post('http://localhost:4200/froccs/delete/post',
+            {
+                froccs_id : data.delete_id,
+                email: data.email,
+                password: data.password
+            })
             .then(console.log('Deleted')).catch(error => alert("Hiba"+error));
 
     }

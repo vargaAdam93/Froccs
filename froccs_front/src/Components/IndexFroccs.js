@@ -16,12 +16,23 @@ class IndexFroccs extends Component
         this.state = {  froccsok : '',
                         loaded : 0,
                         delete_id : 0,
-                        delete_request:0
+                        delete_request:0,
+                        email: '',
+                        password: ''
         };
 
         this.FroccsService = new FroccsService();
 
         this.DeletehandleSubmit = this.DeletehandleSubmit.bind(this);
+        this.LoginhandleSubmit = this.LoginhandleSubmit.bind(this);
+        this.EmailhandleChange = this.EmailhandleChange.bind(this);
+        this.PasswordhandleChange = this.PasswordhandleChange.bind(this);
+    }
+
+    LoginhandleSubmit()
+    {
+
+        this.FroccsService.delete(this.state);
     }
 
     componentDidMount()
@@ -37,19 +48,43 @@ class IndexFroccs extends Component
                 })
         }
     }
+    EmailhandleChange(event)
+    {
+        this.setState({email: event.target.value});
+    }
 
+    PasswordhandleChange(event)
+    {
+        this.setState({password: event.target.value});
+    }
     DeletehandleSubmit(event)
     {
-        //console.log(event);
-        //alert(event.target.name);
         this.setState({delete_id: event.target.name,delete_request:1});
-        //this.FroccsService.delete(event.target.name);
-        window.location.reload();
-
     }
 
     render()
     {
+        if(this.state.delete_request == 1)
+        {
+            return(
+                <div>
+                    <label>{this.state.delete_id}</label>
+                    <form onSubmit={this.LoginhandleSubmit}>
+                        <label>
+                            Email:
+                            <input type="text" value={this.state.email} onChange={this.EmailhandleChange} className="form-control"/>
+                        </label>
+                        <br/>
+                        <label>
+                            Password:
+                            <input type="password" value={this.state.password} onChange={this.PasswordhandleChange} className="form-control"/>
+                        </label>
+                        <br/>
+                        <input type="submit" value="Login" className="btn btn-primary"/>
+                    </form>
+                </div>
+            );
+        }
 
         if (this.state.loaded == 1) {
             var froccs_with_perc = this.state.froccsok;
@@ -57,7 +92,7 @@ class IndexFroccs extends Component
             {
                 var water_plus_wine = froccs_with_perc[k].water + froccs_with_perc[k].wine;
                 var one_part = froccs_with_perc[k].total_dl / water_plus_wine;
-                var water_dl = froccs_with_perc[k].water * one_part
+                var water_dl = froccs_with_perc[k].water * one_part;
                 froccs_with_perc[k].water_inperc = ((water_dl/froccs_with_perc[k].total_dl) *100 );
             }
             const froccsok = froccs_with_perc;
