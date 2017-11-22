@@ -211,38 +211,6 @@ class IndexFroccs extends Component
             );
         }
     }
- /*       return (
-            <div>
-                <br/>
-                <div align="center">
-                    <label>Order by:</label>
-                    <select onChange={this.selectChangedHandleEvent} value={this.orderby}>
-                        <option value="name">Name</option>
-                        <option value="wine">Wine</option>
-                        <option value="water">Water</option>
-                        <option value="total">Total_dl</option>
-                    </select>
-                </div>
-                <br/>
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <td>No.</td>
-                        <td>Name</td>
-                        <td>Wine</td>
-                        <td>Water</td>
-                        <td>All</td>
-                        <td>Other names</td>
-                        <td></td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.tabRow()}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }*/
 }
 
 export default IndexFroccs;
