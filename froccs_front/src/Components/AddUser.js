@@ -39,7 +39,6 @@ class AddUser extends Component {
 
     handleSubmit(event)
     {
-        alert(this.state.name);
         event.preventDefault();
         this.addUserService.sendData(this.state);
         this.props.history.push('/');

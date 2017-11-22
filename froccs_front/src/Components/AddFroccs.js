@@ -5,6 +5,7 @@ import axios from 'axios'
 import UserService from '../Components/UserService'
 import FroccsService from "./FroccsService";
 import {FileUpload}  from 'react-md'; 
+import Papa from 'papaparse';
 
 class AddFroccs extends Component {
     constructor(props) {
@@ -33,9 +34,6 @@ class AddFroccs extends Component {
         this.WaterhandleChange = this.WaterhandleChange.bind(this);
         this.Total_dlhandleChange = this.Total_dlhandleChange.bind(this);
         this.sendData = this.sendData.bind(this);
-        
-        
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.LoginhandleSubmit = this.LoginhandleSubmit.bind(this);
     }
@@ -78,7 +76,7 @@ class AddFroccs extends Component {
 
     handleSubmit(event)
     {
-        alert(this.state.email);
+     
         event.preventDefault();
         this.addFroccsService.sendData(this.state);
         this.props.history.push('/');
@@ -111,8 +109,21 @@ class AddFroccs extends Component {
         }).catch((err,response)=>alert("login error"+err))
     }
 
+    
+
+    
     sendData(file,data){
-        this.addFroccsService.sendData(JSON.parse(data))
+        
+        if(file.name.split('.').pop()=="csv")
+            Papa.parse(new Blob([new Uint8Array(data)]),{
+                delimiter: ",",	// auto-detect
+                header:true,
+                complete: (json) =>{
+                    this.addFroccsService.sendData(json.data[0])
+                }
+            })
+        else this.addFroccsService.sendData(data)    
+         
     }
 
 

@@ -14,9 +14,6 @@ class FroccsService
                 total_dl : data.total_dl,
                 uploaded_by : data.email
             })
-            .then(function (response) {
-                alert("post"+response.data);
-            })
             .catch(function (error) {
                 alert(error);
             });

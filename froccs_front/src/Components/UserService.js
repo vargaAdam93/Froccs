@@ -22,21 +22,17 @@ class UserService
     login(data)
     {
         axios.post('http://localhost:4200/users/login/post',
-           {
-               email: data.email,
-               password: data.password
-           })
-           .then(function (response) {
-               if(response==null){
-                   console.log(response)
-                   return null
-                }
-               
-               console.log(response)
-               alert(response.data._id);
-               return response.data._id;
+            {
+                email: data.email,
+                password: data.password
+        })
+        .then(function (response) {
+            if(response==null){
+                return null
+            }
+            return response.data._id;
 
-           }).catch((err,response)=>{console.log(err);console.log(response)})
+        }).catch((err,response)=>{console.log(err);console.log(response)})
            
     }
 }
