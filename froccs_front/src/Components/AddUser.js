@@ -47,8 +47,8 @@ class AddUser extends Component {
     render()
     {
         return(
-            <div className="container">
-                <form onSubmit={this.handleSubmit}>
+            <div className="container"  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
+                <form onSubmit={this.handleSubmit} >
 
                     <label>
                         Name:
@@ -61,16 +61,16 @@ class AddUser extends Component {
                     </label>
                     <br/>
                     <label>
-                        Passwd:
+                        Password:
                         <input type="password" value={this.state.password} onChange={this.PasswdhandleChange} className="form-control"/>
                     </label>
                     <br/>
                     <select onChange={this.selectChangedHandleEvent} value={this.state.type}>
-                        <option value="1">Felhasznalo</option>
-                        <option value="2">Rendszergazda</option>
+                        <option value="1">User</option>
+                        <option value="2">Admin</option>
                     </select>
                     <br/>
-                    <input type="submit" value="Submit" className="btn btn-primary"/>
+                    <input type="submit" value="Submit"  style={{ justifyContent: 'center',   alignItems: 'center', marginTop:20}} className="btn btn-primary"/>
                 </form>
             </div>
         );

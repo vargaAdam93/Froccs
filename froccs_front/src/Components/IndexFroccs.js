@@ -64,10 +64,14 @@ class IndexFroccs extends Component
 
     render()
     {
+
+      
+
+
         if(this.state.delete_request == 1)
         {
             return(
-                <div>
+                <div  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
                     <label>{this.state.delete_id}</label>
                     <form onSubmit={this.LoginhandleSubmit}>
                         <label>
@@ -97,7 +101,7 @@ class IndexFroccs extends Component
             }
             const froccsok = froccs_with_perc;
             return (
-                <div>
+                <div  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
                     <p>
                         <p>
                             <div align="center">
@@ -205,12 +209,16 @@ class IndexFroccs extends Component
         }
         else {
             return (
-                <div>
+                <div  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
                     LOADING...
                 </div>
             );
         }
     }
+
 }
+
+        
+
 
 export default IndexFroccs;

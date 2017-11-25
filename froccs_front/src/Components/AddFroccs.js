@@ -114,7 +114,7 @@ class AddFroccs extends Component {
     
     sendData(file,data){
         
-        if(file.name.split('.').pop()=="csv")
+        if(file.name.split('.').pop()==="csv")
             Papa.parse(new Blob([new Uint8Array(data)]),{
                 delimiter: ",",	// auto-detect
                 header:true,
@@ -129,10 +129,10 @@ class AddFroccs extends Component {
 
     render()
     {
-        if (this.state.UserId == '')
+        if (this.state.UserId === '')
         {
            return(
-               <div>
+               <div  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
                    <form onSubmit={this.LoginhandleSubmit}>
                     <label>
                         Email:
@@ -152,7 +152,7 @@ class AddFroccs extends Component {
         else
         {
             return(
-                <div className="container">
+                <div  style={{padding: 50,margin: 10,  justifyContent: 'center',display: 'flex',}}>
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             Name:
@@ -177,7 +177,7 @@ class AddFroccs extends Component {
                         
                         
                         <input type="submit" value="Submit" className="btn btn-primary"/>
-                        { (this.state.type==2 ) ?
+                        { (this.state.type===2 ) ?
                                 <FileUpload  id="multiple-file-upload"  onLoad={this.sendData}/>
                                 :
                                 null
