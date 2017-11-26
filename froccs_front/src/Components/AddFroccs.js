@@ -113,16 +113,20 @@ class AddFroccs extends Component {
 
     
     sendData(file,data){
-        
-        if(file.name.split('.').pop()==="csv")
+               
+        if(file.name.split('.').pop()=="csv"){
             Papa.parse(new Blob([new Uint8Array(data)]),{
-                delimiter: ",",	// auto-detect
-                header:true,
-                complete: (json) =>{
-                    this.addFroccsService.sendData(json.data[0])
-                }
+            delimiter: ",",	// auto-detect
+            header:true,
+            complete: (json) =>{
+                this.addFroccsService.sendData(json.data[0])
+            }
             })
-        else this.addFroccsService.sendData(data)    
+        }        
+        else{
+            console.log(data)
+            this.addFroccsService.sendData(JSON.parse(data))
+        }
          
     }
 

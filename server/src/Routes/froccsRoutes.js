@@ -9,8 +9,7 @@ froccsRouter.route('/add/post').post(
     function (req, res) {
         console.log(req.body);
 
-        //megvan a db-be
-        //TODO egyezes eseten ujragondolni   
+          
 
         Froccs.find({wine:req.body.wine,water:req.body.water,total_dl:req.body.total_dl}).then((check)=> {
 
@@ -71,8 +70,9 @@ froccsRouter.route('/').get(
         );
     }
 );
-/*EDIT es UPDATE nem is kell*/
+
 //EDIT
+//Deprecated
 froccsRouter.route('/edit/:id').get(function (req,res) {
     var id = req.params.id;
     Froccs.findById(id, function (err, froccs) {
